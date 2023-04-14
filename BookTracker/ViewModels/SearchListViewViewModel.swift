@@ -19,14 +19,19 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
     private var books: [Book] = [] {
         didSet {
             for book in books {
-                let title = book.volumeInfo.title
-                let author = book.volumeInfo.authors[0]
+                let title = book.volumeInfo.title ?? "No title available"
+                let authors = book.volumeInfo.authors ?? []
                 var imageURL = book.volumeInfo.imageLinks?.thumbnail ?? "http://icon-library.com/images/small-book-icon/small-book-icon-3.jpg"
                 imageURL = imageURL.replacingOccurrences(of: "http", with: "https")
                 
+                var authorName = "No author available"
+                if let firstAuthor = authors.first {
+                    authorName = firstAuthor
+                }
+                
                 let viewModel = SearchCollectionViewCellViewModel(
                     bookTitle: title,
-                    author: author,
+                    author: authorName,
                     bookCoverImageURL: URL(string: imageURL)
                 )
                 
@@ -77,7 +82,11 @@ extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewD
             fatalError("Unsupported cell")
         }
         
-        cell.configure(with: cellViewModels[indexPath.row])
+        if cellViewModels.indices.contains(indexPath.row) {
+            let cellViewModel = cellViewModels[indexPath.row]
+            cell.configure(with: cellViewModel)
+        }
+        
         return cell
     }
     
