@@ -8,13 +8,25 @@
 import UIKit
 
 protocol SearchListViewViewModelDelegate: AnyObject {
-    func didLoadInitialBooks()
+    func willLoadBooks()
+    func didLoadBooks()
 }
 
 final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
     public weak var delegate: SearchListViewViewModelDelegate?
     private var cellViewModels: [SearchCollectionViewCellViewModel] = []
     private var searchText: String = ""
+    private var isFetchingBooks = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.isFetchingBooks {
+                    self.delegate?.willLoadBooks()
+                } else {
+                    self.delegate?.didLoadBooks()
+                }
+            }
+        }
+    }
     
     private var books: [Book] = [] {
         didSet {
@@ -44,12 +56,11 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
         APIManager.shared.retrieveData(search: with) { [weak self] response in
             if let result = response.items {
                 self?.books = result
-                DispatchQueue.main.async {
-                    self?.delegate?.didLoadInitialBooks()
-                }
+                self?.isFetchingBooks = false
             }
         } fail: { error in
             print("Failed with error: \(error.localizedDescription)")
+            self.isFetchingBooks = false
         }
     }
     
@@ -64,6 +75,7 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         cellViewModels.removeAll()
+        self.isFetchingBooks = true
         fetchBooks(with: searchText)
     }
     

@@ -7,7 +7,6 @@
 
 import UIKit
 
-/// handles showing list of searched books, loader
 final class SearchListView: UIView {
     private let viewModel = SearchListViewViewModel()
     
@@ -21,7 +20,7 @@ final class SearchListView: UIView {
         return searchBar
     }()
     
-    private let spinner: UIActivityIndicatorView = {
+    let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -34,8 +33,8 @@ final class SearchListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: layout)
-        collectionView.isHidden = true
-        collectionView.alpha = 0
+        collectionView.isHidden = false
+        collectionView.alpha = 1
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SearchCollectionViewCell.self,
                                 forCellWithReuseIdentifier: SearchCollectionViewCell.cellIdentifier)
@@ -82,21 +81,17 @@ final class SearchListView: UIView {
     private func setUpCollectionView() {
         collectionView.dataSource = viewModel
         collectionView.delegate = viewModel
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
-            //self.spinner.stopAnimating()
-            self.collectionView.isHidden = false
-            
-            UIView.animate(withDuration: 0.4, animations: {
-                self.collectionView.alpha = 1
-            })
-        })
     }
 
 }
 
 extension SearchListView: SearchListViewViewModelDelegate {
-    func didLoadInitialBooks() {
+    func willLoadBooks() {
+        spinner.startAnimating()
+    }
+    
+    func didLoadBooks() {
+        spinner.stopAnimating()
         collectionView.reloadData()
     }
 }
