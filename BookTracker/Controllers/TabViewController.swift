@@ -18,19 +18,19 @@ final class TabViewController: UITabBarController {
     
     private func setUpTabs() {
         let searchVC = SearchViewController()
-        let bookshelfVC = BookshelfViewController()
+        let bookshelvesVC = BookshelvesViewController()
         
         searchVC.navigationItem.largeTitleDisplayMode = .automatic
-        bookshelfVC.navigationItem.largeTitleDisplayMode = .automatic
+        bookshelvesVC.navigationItem.largeTitleDisplayMode = .automatic
 
         let nav1 = UINavigationController(rootViewController: searchVC)
-        let nav2 = UINavigationController(rootViewController: bookshelfVC)
+        let nav2 = UINavigationController(rootViewController: bookshelvesVC)
         
         nav1.tabBarItem = UITabBarItem(title: "Search",
                                        image: UIImage(systemName: "magnifyingglass"),
                                        tag: 1)
-        nav2.tabBarItem = UITabBarItem(title: "Bookshelf",
-                                       image: UIImage(systemName: "book"),
+        nav2.tabBarItem = UITabBarItem(title: "Bookshelves",
+                                       image: UIImage(systemName: "books.vertical"),
                                        tag: 2)
         
         for nav in [nav1, nav2] {

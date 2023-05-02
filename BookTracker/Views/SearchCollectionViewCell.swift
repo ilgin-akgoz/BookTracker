@@ -8,7 +8,7 @@
 import UIKit
 
 /// single cell for a book
-class SearchCollectionViewCell: UICollectionViewCell {
+final class SearchCollectionViewCell: UICollectionViewCell {
     static let cellIdentifier = "SearchCollectionViewCell"
     
     private let imageView: UIImageView = {
@@ -40,7 +40,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .secondarySystemBackground
+        contentView.backgroundColor = .clear
         contentView.addSubviews(authorLabel, bookLabel, imageView)
         addConstraints()
     }

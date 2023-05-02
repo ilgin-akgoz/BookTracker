@@ -111,4 +111,24 @@ extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewD
             height: width * 1.5
         )
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = SearchDetailViewController()
+        let viewModel = SearchDetailViewViewModel()
+        viewModel.author = "Author: \(cellViewModels[indexPath.row].author)"
+        viewModel.bookTitle = "Title: \(cellViewModels[indexPath.row].bookTitle)"
+        
+        let view = SearchDetailView()
+        view.config(with: viewModel)
+        vc.view = view // vc.searchDetailView hiçbir şey göstermiyor???
+        
+        guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        guard let firstWindow = firstScene.windows.first else { return }
+        
+        if let searchVC = firstWindow.rootViewController as? TabViewController,
+            let navController = searchVC.viewControllers?[0] as? UINavigationController {
+            navController.pushViewController(vc, animated: true)
+        }
+    }
+    
 }

@@ -13,14 +13,14 @@ final class SearchListView: UIView {
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "Search..."
+        searchBar.placeholder = "Search"
         searchBar.isHidden = false
         searchBar.sizeToFit()
         searchBar.searchBarStyle = .minimal
         return searchBar
     }()
     
-    let spinner: UIActivityIndicatorView = {
+    private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -46,10 +46,8 @@ final class SearchListView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         addSubviews(collectionView, spinner, searchBar)
-        
         addConstraints()
         
-        //spinner.startAnimating()
         viewModel.delegate = self
         searchBar.delegate = viewModel
         setUpCollectionView()

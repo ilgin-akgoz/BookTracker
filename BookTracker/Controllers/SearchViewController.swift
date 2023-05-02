@@ -9,10 +9,9 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     private let searchListView = SearchListView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemBackground
         title = "Search"
         setUpView()
