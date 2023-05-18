@@ -120,7 +120,7 @@ extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewD
         
         let view = SearchDetailView()
         view.config(with: viewModel)
-        vc.view = view // vc.searchDetailView hiçbir şey göstermiyor???
+        vc.view = view
         
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         guard let firstWindow = firstScene.windows.first else { return }
