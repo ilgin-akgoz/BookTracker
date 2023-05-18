@@ -14,10 +14,10 @@ struct Book: Codable {
     struct VolumeInfo: Codable {
         let title: String?
         let authors: [String]?
-        //let publisher: String
-        //let publishedDate: String
-        //let description: String
-        //let pageCount: Int
+        let publisher: String?
+        //let publishedDate: String?
+        //let description: String?
+        let pageCount: Int?
         //let categories: [String]
         //let averageRating: Double
         let imageLinks: ImageLinks?

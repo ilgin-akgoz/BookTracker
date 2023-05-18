@@ -24,9 +24,25 @@ final class SearchDetailView: UIView {
         return title
     }()
     
+    private let publisherLabel: UILabel = {
+        let title = UILabel()
+        title.textAlignment = .center
+        title.font = .systemFont(ofSize: 16, weight: .medium)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
+    private let pageCountLabel: UILabel = {
+        let title = UILabel()
+        title.textAlignment = .center
+        title.font = .systemFont(ofSize: 16, weight: .medium)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubviews(authorLabel, bookLabel)
+        addSubviews(authorLabel, bookLabel, publisherLabel, pageCountLabel)
         addConstraints()
     }
     
@@ -45,13 +61,25 @@ final class SearchDetailView: UIView {
             authorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             authorLabel.heightAnchor.constraint(equalToConstant: 40),
             authorLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
-            authorLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+            
+            publisherLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 20),
+            publisherLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            publisherLabel.heightAnchor.constraint(equalToConstant: 40),
+            publisherLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
+            
+            pageCountLabel.topAnchor.constraint(equalTo: publisherLabel.bottomAnchor, constant: 20),
+            pageCountLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            pageCountLabel.heightAnchor.constraint(equalToConstant: 40),
+            pageCountLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
+            pageCountLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -20),
         ])
     }
     
     public func config(with viewModel: SearchDetailViewViewModel) {
-        bookLabel.text = viewModel.bookTitle
-        authorLabel.text = viewModel.author
+        bookLabel.text = "Title: \(viewModel.bookTitle)"
+        authorLabel.text = "Author: \(viewModel.author)"
+        publisherLabel.text = "Publisher: \(viewModel.publisher)"
+        pageCountLabel.text = "Page Count: \(viewModel.pageCount)"
     }
 
 }

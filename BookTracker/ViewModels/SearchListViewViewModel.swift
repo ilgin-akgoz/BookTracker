@@ -15,6 +15,8 @@ protocol SearchListViewViewModelDelegate: AnyObject {
 final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
     public weak var delegate: SearchListViewViewModelDelegate?
     private var cellViewModels: [SearchCollectionViewCellViewModel] = []
+    private var detailViewModels: [SearchDetailViewViewModel] = []
+    
     private var searchText: String = ""
     private var isFetchingBooks = false {
         didSet {
@@ -35,6 +37,8 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
                 let authors = book.volumeInfo.authors ?? []
                 var imageURL = book.volumeInfo.imageLinks?.thumbnail ?? "http://icon-library.com/images/small-book-icon/small-book-icon-3.jpg"
                 imageURL = imageURL.replacingOccurrences(of: "http", with: "https")
+                let publisher = book.volumeInfo.publisher ?? "No publisher available"
+                let pageCount = book.volumeInfo.pageCount ?? 0
                 
                 var authorName = "No author available"
                 if let firstAuthor = authors.first {
@@ -47,7 +51,15 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
                     bookCoverImageURL: URL(string: imageURL)
                 )
                 
+                let detailViewModel = SearchDetailViewViewModel(
+                    bookTitle: title,
+                    author: authorName,
+                    publisher: publisher,
+                    pageCount: pageCount
+                )
+                
                 cellViewModels.append(viewModel)
+                detailViewModels.append(detailViewModel)
             }
         }
     }
@@ -114,12 +126,10 @@ extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = SearchDetailViewController()
-        let viewModel = SearchDetailViewViewModel()
-        viewModel.author = "Author: \(cellViewModels[indexPath.row].author)"
-        viewModel.bookTitle = "Title: \(cellViewModels[indexPath.row].bookTitle)"
         
+        let detailViewModel = detailViewModels[indexPath.row]
         let view = SearchDetailView()
-        view.config(with: viewModel)
+        view.config(with: detailViewModel)
         vc.view = view
         
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
