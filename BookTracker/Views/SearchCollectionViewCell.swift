@@ -77,7 +77,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         authorLabel.text = nil
     }
     
-    public func configure(with viewModel: SearchCollectionViewCellViewModel) {
+    public func configure(with viewModel: BookViewModel) {
         bookLabel.text = viewModel.bookTitle
         authorLabel.text = viewModel.author
         viewModel.fetchImage { [weak self] result in

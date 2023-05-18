@@ -14,8 +14,7 @@ protocol SearchListViewViewModelDelegate: AnyObject {
 
 final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
     public weak var delegate: SearchListViewViewModelDelegate?
-    private var cellViewModels: [SearchCollectionViewCellViewModel] = []
-    private var detailViewModels: [SearchDetailViewViewModel] = []
+    private var bookViewModels: [BookViewModel] = []
     
     private var searchText: String = ""
     private var isFetchingBooks = false {
@@ -45,21 +44,15 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
                     authorName = firstAuthor
                 }
                 
-                let viewModel = SearchCollectionViewCellViewModel(
+                let viewModel = BookViewModel(
                     bookTitle: title,
                     author: authorName,
-                    bookCoverImageURL: URL(string: imageURL)
-                )
-                
-                let detailViewModel = SearchDetailViewViewModel(
-                    bookTitle: title,
-                    author: authorName,
+                    bookCoverImageURL: URL(string: imageURL),
                     publisher: publisher,
                     pageCount: pageCount
                 )
                 
-                cellViewModels.append(viewModel)
-                detailViewModels.append(detailViewModel)
+                bookViewModels.append(viewModel)
             }
         }
     }
@@ -86,7 +79,7 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
         
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        cellViewModels.removeAll()
+        bookViewModels.removeAll()
         self.isFetchingBooks = true
         fetchBooks(with: searchText)
     }
@@ -95,7 +88,7 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
 
 extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellViewModels.count
+        return bookViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -106,9 +99,9 @@ extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewD
             fatalError("Unsupported cell")
         }
         
-        if cellViewModels.indices.contains(indexPath.row) {
-            let cellViewModel = cellViewModels[indexPath.row]
-            cell.configure(with: cellViewModel)
+        if bookViewModels.indices.contains(indexPath.row) {
+            let bookViewModel = bookViewModels[indexPath.row]
+            cell.configure(with: bookViewModel)
         }
         
         return cell
@@ -127,10 +120,12 @@ extension SearchListViewViewModel: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = SearchDetailViewController()
         
-        let detailViewModel = detailViewModels[indexPath.row]
-        let view = SearchDetailView()
-        view.config(with: detailViewModel)
-        vc.view = view
+        if bookViewModels.indices.contains(indexPath.row) {
+            let bookViewModel = bookViewModels[indexPath.row]
+            let view = SearchDetailView()
+            view.config(with: bookViewModel)
+            vc.view = view
+        }
         
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         guard let firstWindow = firstScene.windows.first else { return }

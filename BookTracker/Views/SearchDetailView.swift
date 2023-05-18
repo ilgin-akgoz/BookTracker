@@ -75,7 +75,7 @@ final class SearchDetailView: UIView {
         ])
     }
     
-    public func config(with viewModel: SearchDetailViewViewModel) {
+    public func config(with viewModel: BookViewModel) {
         bookLabel.text = "Title: \(viewModel.bookTitle)"
         authorLabel.text = "Author: \(viewModel.author)"
         publisherLabel.text = "Publisher: \(viewModel.publisher)"
