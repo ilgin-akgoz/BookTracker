@@ -112,7 +112,6 @@
 				3A18477329DDC93C00CE5E74 /* SearchListView.swift */,
 				3A18477929DDD58900CE5E74 /* SearchCollectionViewCell.swift */,
 				3AC2179429F192AD00C616F8 /* SearchDetailView.swift */,
-				3A7C57872A16ED2500F81695 /* BookViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -120,6 +119,7 @@
 		3A84D54C29CFB57A00AC3923 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				3A7C57872A16ED2500F81695 /* BookViewModel.swift */,
 				3A18477129DDC78800CE5E74 /* SearchListViewViewModel.swift */,
 			);
 			path = ViewModels;
