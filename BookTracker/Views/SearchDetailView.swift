@@ -7,79 +7,57 @@
 
 import UIKit
 
-final class SearchDetailView: UIView {
-    private let authorLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+final class SearchDetailView: UITableView {
+    private var bookViewModel: BookViewModel?
     
-    private let bookLabel: UILabel = {
-        let title = UILabel()
-        title.textAlignment = .center
-        title.font = .systemFont(ofSize: 16, weight: .medium)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
-    
-    private let publisherLabel: UILabel = {
-        let title = UILabel()
-        title.textAlignment = .center
-        title.font = .systemFont(ofSize: 16, weight: .medium)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
-    
-    private let pageCountLabel: UILabel = {
-        let title = UILabel()
-        title.textAlignment = .center
-        title.font = .systemFont(ofSize: 16, weight: .medium)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubviews(authorLabel, bookLabel, publisherLabel, pageCountLabel)
-        addConstraints()
+    init() {
+        super.init(frame: .zero, style: .plain)
+        register(SearchDetailTableViewCell.self, forCellReuseIdentifier: SearchDetailTableViewCell.cellIdentifier)
+        dataSource = self
+        delegate = self
+        separatorStyle = .none
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
-
-    private func addConstraints() {
-        NSLayoutConstraint.activate([
-            bookLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            bookLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20),
-            bookLabel.heightAnchor.constraint(equalToConstant: 40),
-            bookLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
-            
-            authorLabel.topAnchor.constraint(equalTo: bookLabel.bottomAnchor, constant: 20),
-            authorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            authorLabel.heightAnchor.constraint(equalToConstant: 40),
-            authorLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
-            
-            publisherLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 20),
-            publisherLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            publisherLabel.heightAnchor.constraint(equalToConstant: 40),
-            publisherLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
-            
-            pageCountLabel.topAnchor.constraint(equalTo: publisherLabel.bottomAnchor, constant: 20),
-            pageCountLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            pageCountLabel.heightAnchor.constraint(equalToConstant: 40),
-            pageCountLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -40),
-            pageCountLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -20),
-        ])
-    }
     
     public func config(with viewModel: BookViewModel) {
-        bookLabel.text = "Title: \(viewModel.bookTitle)"
-        authorLabel.text = "Author: \(viewModel.author)"
-        publisherLabel.text = "Publisher: \(viewModel.publisher)"
-        pageCountLabel.text = "Page Count: \(viewModel.pageCount)"
+        bookViewModel = viewModel
+        reloadData()
     }
-
 }
+
+extension SearchDetailView: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchDetailTableViewCell") as? SearchDetailTableViewCell else {
+            fatalError("Unsupported cell")
+        }
+        
+        switch indexPath.row {
+        case 0:
+            cell.configure(title: "Title", value: bookViewModel?.bookTitle)
+        case 1:
+            cell.configure(title: "Author", value: bookViewModel?.author)
+        case 2:
+            cell.configure(title: "Publisher", value: bookViewModel?.publisher)
+        case 3:
+            cell.configure(title: "Page Count", value: "\(bookViewModel?.pageCount ?? 0)")
+        default:
+            break
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+}
+    
+    
+
