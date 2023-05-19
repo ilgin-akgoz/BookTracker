@@ -2,16 +2,18 @@
 
 - MVVM Architecture
 - Programmatic UI
-- Google Books API
+- [Google Books API](https://developers.google.com/books)
 - TabBarController
 
 ## To Do
-ℹ️ Display more book info on the search detail view\
-📖 Implementation of the bookshelves tab
+ℹ️ Display book cover image on the detail view of the Search tab\
+📖 Implementation of the Bookshelves tab
 
 
 ## Current state of the app📱
 
+https://github.com/ilgin-akgoz/BookTracker/assets/82042228/123bcdf2-ad96-4627-a428-ee83982ebc3d
 
-https://user-images.githubusercontent.com/82042228/235713827-48d72373-9c58-4df8-a88b-9e379f6fbd16.mov
+
+
 
