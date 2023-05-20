@@ -70,6 +70,24 @@
 			path = APIClient;
 			sourceTree = "<group>";
 		};
+		3A54E0252A19232C00DDF70D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				3A18477329DDC93C00CE5E74 /* SearchListView.swift */,
+				3A18477929DDD58900CE5E74 /* SearchCollectionViewCell.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		3A54E0272A19235800DDF70D /* Search Detail */ = {
+			isa = PBXGroup;
+			children = (
+				3AC2179429F192AD00C616F8 /* SearchDetailView.swift */,
+				3ABEC1C72A182AD900BE5D20 /* SearchDetailTableViewCell.swift */,
+			);
+			path = "Search Detail";
+			sourceTree = "<group>";
+		};
 		3A84D52A29CFB3FD00AC3923 = {
 			isa = PBXGroup;
 			children = (
@@ -111,10 +129,8 @@
 		3A84D54B29CFB56E00AC3923 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3A18477329DDC93C00CE5E74 /* SearchListView.swift */,
-				3A18477929DDD58900CE5E74 /* SearchCollectionViewCell.swift */,
-				3AC2179429F192AD00C616F8 /* SearchDetailView.swift */,
-				3ABEC1C72A182AD900BE5D20 /* SearchDetailTableViewCell.swift */,
+				3A54E0252A19232C00DDF70D /* Search */,
+				3A54E0272A19235800DDF70D /* Search Detail */,
 			);
 			path = Views;
 			sourceTree = "<group>";
