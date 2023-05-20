@@ -60,7 +60,7 @@ extension SearchDetailView: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == 0 {
             return 200
         } else {
-            return 80
+            return UITableView.automaticDimension
         }
     }
 }

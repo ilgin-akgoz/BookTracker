@@ -30,12 +30,12 @@ final class SearchDetailTableViewCell: UITableViewCell {
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         addSubviews(titleLabel, valueLabel, bookImageView)
         setUpConstraints()
         isUserInteractionEnabled = false
@@ -53,10 +53,12 @@ final class SearchDetailTableViewCell: UITableViewCell {
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 10),
             titleLabel.heightAnchor.constraint(equalToConstant: 20),
-                    
-            valueLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
             valueLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            valueLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -10)
+            valueLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            valueLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            valueLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+
         ])
     }
     
