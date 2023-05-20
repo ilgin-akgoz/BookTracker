@@ -30,7 +30,7 @@ final class SearchDetailView: UITableView {
 
 extension SearchDetailView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -40,13 +40,15 @@ extension SearchDetailView: UITableViewDataSource, UITableViewDelegate {
         
         switch indexPath.row {
         case 0:
-            cell.configure(title: "Title", value: bookViewModel?.bookTitle)
+            cell.configureImage(viewModel: bookViewModel)
         case 1:
-            cell.configure(title: "Author", value: bookViewModel?.author)
+            cell.configureLabels(title: "Title", value: bookViewModel?.bookTitle)
         case 2:
-            cell.configure(title: "Publisher", value: bookViewModel?.publisher)
+            cell.configureLabels(title: "Author", value: bookViewModel?.author)
         case 3:
-            cell.configure(title: "Page Count", value: "\(bookViewModel?.pageCount ?? 0)")
+            cell.configureLabels(title: "Publisher", value: bookViewModel?.publisher)
+        case 4:
+            cell.configureLabels(title: "Page Count", value: "\(bookViewModel?.pageCount ?? 0)")
         default:
             break
         }
@@ -55,7 +57,11 @@ extension SearchDetailView: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        if indexPath.row == 0 {
+            return 200
+        } else {
+            return 80
+        }
     }
 }
     
