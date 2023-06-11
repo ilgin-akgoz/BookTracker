@@ -13,7 +13,7 @@ final class SearchListView: UIView {
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = "Search for a book..."
         searchBar.isHidden = false
         searchBar.sizeToFit()
         searchBar.searchBarStyle = .minimal

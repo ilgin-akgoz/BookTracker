@@ -17,6 +17,7 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
     private var bookViewModels: [BookViewModel] = []
     
     private var searchText: String = ""
+    
     private var isFetchingBooks = false {
         didSet {
             DispatchQueue.main.async {
@@ -57,15 +58,25 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
         }
     }
     
-    public func fetchBooks(with: String) {
-        APIManager.shared.retrieveData(search: with) { [weak self] response in
-            if let result = response.items {
-                self?.books = result
-                self?.isFetchingBooks = false
+    public func fetchBooks(for query: String) {
+        Task {
+            do {
+                let response = try await APIManager.shared.retrieveData(for: query)
+                
+                if let result = response.items {
+                    books = result
+                    isFetchingBooks = false
+                }
+            } catch SMError.invalidURL {
+                print(SMError.invalidURL.description)
+                isFetchingBooks = false
+            } catch SMError.invalidResponse {
+                print(SMError.invalidResponse.description)
+                isFetchingBooks = false
+            } catch SMError.invalidData {
+                print(SMError.invalidData.description)
+                isFetchingBooks = false
             }
-        } fail: { error in
-            print("Failed with error: \(error.localizedDescription)")
-            self.isFetchingBooks = false
         }
     }
     
@@ -81,7 +92,7 @@ final class SearchListViewViewModel: NSObject, UISearchBarDelegate {
         searchBar.resignFirstResponder()
         bookViewModels.removeAll()
         self.isFetchingBooks = true
-        fetchBooks(with: searchText)
+        fetchBooks(for: searchText)
     }
     
 }

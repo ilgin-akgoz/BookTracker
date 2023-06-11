@@ -10,29 +10,24 @@ import Foundation
 final class ServiceManager {
     public static let shared = ServiceManager()
     
-    func callService<T: Decodable>(urlString: String, success: @escaping ((T) -> Void), fail: @escaping ((Error) -> Void)) {
-        guard let url = URL(string: urlString) else { return }
+    func callService<T: Decodable>(with url: String) async throws -> T {
+        guard let url = URL(string: url) else {
+            throw SMError.invalidURL
+        }
         
-        let session = URLSession.shared
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        let (data, response) = try await URLSession.shared.data(from: url)
         
-        let task: URLSessionDataTask = session.dataTask(with: request as URLRequest, completionHandler: {
-            data, response, error in
-            
-            guard error == nil else { return }
-            guard let data = data else { return }
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw SMError.invalidResponse
+        }
+        
+        do {
             let decoder = JSONDecoder()
-            do {
-                let json = try decoder.decode(T.self, from: data)
-                success(json)
-            } catch let error {
-                let error = NSError(domain: "ServiceManager", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode response: \(error.localizedDescription)"])
-                fail(error)
-            }
-        })
-        task.resume()
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            throw SMError.invalidData
+        }
+        
     }
 }
 

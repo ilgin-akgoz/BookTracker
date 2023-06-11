@@ -29,6 +29,6 @@ struct Book: Codable {
     }
 }
 
-struct GetBookResponse: Codable {
+struct BookResponse: Codable {
     let items: [Book]?
 }
