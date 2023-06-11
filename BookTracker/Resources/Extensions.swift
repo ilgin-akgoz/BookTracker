@@ -14,3 +14,9 @@ extension UIView {
         })
     }
 }
+
+extension UIFont {
+    static func newYork(size: CGFloat) -> UIFont? {
+        return UIFont(name: "New York", size: size)
+    }
+}

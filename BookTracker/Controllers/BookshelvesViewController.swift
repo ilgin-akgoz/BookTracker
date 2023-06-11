@@ -13,9 +13,7 @@ final class BookshelvesViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        title = "Bookshelves"
-        
-    }
     
-
+        title = "Bookshelves"
+    }
 }
