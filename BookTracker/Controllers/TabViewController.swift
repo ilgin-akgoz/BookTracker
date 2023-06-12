@@ -22,9 +22,16 @@ final class TabViewController: UITabBarController {
         
         searchVC.navigationItem.largeTitleDisplayMode = .automatic
         bookshelvesVC.navigationItem.largeTitleDisplayMode = .automatic
-
+        
         let nav1 = UINavigationController(rootViewController: searchVC)
         let nav2 = UINavigationController(rootViewController: bookshelvesVC)
+        
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.newYork(size: 34)!,
+        ]
+        
+        nav1.navigationBar.largeTitleTextAttributes = titleAttributes
+        nav2.navigationBar.largeTitleTextAttributes = titleAttributes
         
         nav1.tabBarItem = UITabBarItem(title: "Search",
                                        image: UIImage(systemName: "magnifyingglass"),
