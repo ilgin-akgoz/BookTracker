@@ -54,17 +54,17 @@ final class SearchCollectionViewCell: UICollectionViewCell {
             bookLabel.heightAnchor.constraint(equalToConstant: 40),
             authorLabel.heightAnchor.constraint(equalToConstant: 40),
             
-            bookLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            bookLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
-            authorLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            authorLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
+            bookLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5),
+            bookLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -5),
+            authorLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5),
+            authorLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -5),
             
-            authorLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -3),
+            authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3),
             bookLabel.bottomAnchor.constraint(equalTo: authorLabel.topAnchor, constant: -3),
             
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor),
+            imageView.leftAnchor.constraint(equalTo: leftAnchor),
+            imageView.rightAnchor.constraint(equalTo: rightAnchor),
             imageView.bottomAnchor.constraint(equalTo: bookLabel.topAnchor, constant: -3),
         ])
         
