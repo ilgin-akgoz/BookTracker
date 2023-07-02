@@ -59,9 +59,9 @@ final class SearchListView: UIView {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            searchBar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            searchBar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+            searchBar.topAnchor.constraint(equalTo: topAnchor),
+            searchBar.leftAnchor.constraint(equalTo: leftAnchor),
+            searchBar.rightAnchor.constraint(equalTo: rightAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 40),
                 
             spinner.widthAnchor.constraint(equalToConstant: 100),

@@ -47,17 +47,17 @@ final class SearchDetailTableViewCell: UITableViewCell {
     
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
-            bookImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            bookImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            bookImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bookImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             
-            titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: bookImageView.bottomAnchor, constant: 10),
             titleLabel.heightAnchor.constraint(equalToConstant: 20),
             
             valueLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            valueLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            valueLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            valueLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+            valueLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            valueLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            valueLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
 
         ])
     }
